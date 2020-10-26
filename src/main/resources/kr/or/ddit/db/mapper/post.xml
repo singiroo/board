@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="post">
+  	
+  	
+  	<!-- 페이지 정보와 게시판의 아이디를 입력받아 해당 페이지의 게시글 목록을 출력함  -->
+  	<select id="getPostList" parameterType="java.util.HashMap" resultType="PostVO">
+  		
+  	</select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </mapper>
