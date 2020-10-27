@@ -8,15 +8,55 @@
   	
   	<!-- 페이지 정보와 게시판의 아이디를 입력받아 해당 페이지의 게시글 목록을 출력함  -->
   	<select id="getPostList" parameterType="java.util.HashMap" resultType="PostVO">
-  		
+select  B.rn,
+        B.postid,
+        B.title,
+        B.parentid,
+        B.userid,
+        B.dates
+  from (select rownum as rn,
+		        A.postid as postid,
+		        lpad('    └─', (level-1)*6) || A.title as title,
+		        A.parentid as parentid,
+		        A.userid as userid,
+		        A.dates as dates
+		from (select * from post where boardid=#{boardid} and status ='T')A
+		start with A.parentid is null
+		connect by prior A.postid = A.parentid
+		order siblings by A.dates desc, A.postid asc)B
+where B.rn between (#{page.page}-1) * #{page.pageSize} + 1 and #{page.page} * #{page.pageSize}
   	</select>
   
   
+  	<!-- 게시판의 아이디를 입력받아 해당 게시판의 삭제되지 않은 글의 갯수를 출력함  -->
+  	<select id="getAllPostCnt" parameterType="String" resultType="Integer">
+  		select count(*) from post where boardid = #{boardid} and status ='T'
+  	</select>
   
+  	<!-- 게시글의 정보를 입력받아 해당 게시글을 등록함.  -->
+  	<insert id="insertPost" parameterType="PostVO" keyColumn="postid" keyProperty="postid" useGeneratedKeys="true">
+  		insert into post values(#{boardid}, 'post'||postSeq.nextVal, #{parentid}, #{title}, sysdate, #{status}, #{userid}, #{cont})
+  	</insert>
   
+  	<!-- 게시글의 첨부파일을 등록함.  -->
+  	<insert id="insertFile" parameterType="FileVO" >
+  		insert into attachfile values('file'||fileSeq.nextVal, #{filenm}, #{realfilename}, #{postid})	  	
+  	</insert>
+  	
   
-  
-  
+  	<!-- 게시글을 가져옴  -->
+  	<select id="getPost" parameterType="String" resultType="PostVO">
+  		select * from post where postid = #{postid}
+  	</select>
+  	
+  	<!-- 게시글의 첨부파일을 가져옴  -->
+  	<select id="getFileList" parameterType="String" resultType="FileVO">
+  		select * from attachfile where postid = #{postid}
+  	</select>
+  	
+  	
+  	
+  	
   
   
   </mapper>

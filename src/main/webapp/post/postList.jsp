@@ -14,20 +14,19 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Jsp</title>
+<title>게시글 목록</title>
 
 <%@include file="/layout/commonLib.jsp" %>
 
 <script>
 	$(document).ready(function(){
 		$('tbody tr').on('click', function(){
-			//data-userId
-			var userid = $(this).data("userid");
-			console.log(userid);
-			console.log("tbody tr click!!");
-			console.log("userId : "+ userid);
+			//data-postid
+			var postid = $(this).data("postid");
+			console.log("tbody tr clicked!!");
+			console.log("postid : "+ postid);
 
-			document.location="/jsp/member?userId="+ userid;
+			document.location="/board/post?postid="+ postid;
 		});
 			
 	});
@@ -51,25 +50,24 @@
 
 <div class="row">
 	<div class="col-sm-8 blog-main">
-		<h2 class="sub-header">사용자</h2>
+		<h2 class="sub-header">${boardnm }</h2>
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<tr>
 					<th>글번호</th>
 					<th>제목</th>
 					<th>작성자</th>
-					<th>작성일</th>
+					<th>작성일시</th>
 				</tr>	
 			<tbody id="postList">
-				<c:forEach var="post" items="${map.postList }">
+				<c:forEach var="post" items="${postMap.postList }">
 					<tr data-postid="${post.postid }">
 					<td>${post.postid }</td>
 					<td>${post.title }</td>
 					<td>${post.userid }</td>
-					<td>${post.dates }</td>
 					<!-- format : yyyy-MM-dd -->
 					<td>
-					 	<fmt:formatDate value="${post.dates }" pattern="yyyy-MM-dd"/>
+					 	<fmt:formatDate value="${post.dates }" pattern="yyyy-MM-dd HH:mm"/>
 					</td>
 					</tr>
 			
@@ -78,20 +76,29 @@
 			</table>
 		</div>
 				
-		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath}/postCreate">새 글 등록</a>
+		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath}/postCreate?boardid=${boardid}">새 글 등록</a>
 
 		<div class="text-center">
 			<ul class="pagination">
-				<c:forEach var="i" begin="1" end="${map.totalPage }" >
+			
+				<li><span>&lt;&lt;</span></li>
+				<li><span>&lt;</span></li>
+			
+			
+				<c:forEach var="i" begin="1" end="${totalPage }" >
 					<c:choose>
-						<c:when test="${i == pageNo}">
+						<c:when test="${i == pageVo.page}">
 							<li class="active"><span>${i}</span></li>					
 						</c:when>
 						<c:otherwise>
-							<li><a href="${pageContext.request.contextPath }/postList?page=${i}&pageSize=${pageSize}">${i }</a></li>					
+							<li><a href="${pageContext.request.contextPath }/postList?page=${i}&pagesize=${pageVo.pageSize}&boardid=${boardid}&boardnm=${boardnm}">${i }</a></li>					
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
+				
+				<li><span>&gt;</span></li>
+				<li><span>&gt;&gt;</span></li>
+				
 			</ul>
 		</div>
 	</div>

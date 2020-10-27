@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import kr.or.ddit.board.model.BoardVO;
 import kr.or.ddit.common.model.PageVO;
+import kr.or.ddit.file.model.AttachFileVO;
 import kr.or.ddit.post.model.PostVO;
 
 public interface PostDaoI {
@@ -29,5 +30,42 @@ public interface PostDaoI {
 	 */
 	public int getAllPostCnt(SqlSession sqlSession, String boardid) throws SQLException;
 	
+	
+	/**
+	 * 게시글 정보를 입력받아 게시글을 등록하고 등록한 게시글의 아이디를 가져오는 메서드
+	 * @param sqlSession	SqlSession객체
+	 * @param postVo		게시글 정보를 담고있는 VO객체
+	 * @return				등록한 게시글의 아이디
+	 * @throws SQLException	
+	 */
+	public String insertPost(SqlSession sqlSession, PostVO postVo) throws SQLException;
+
+	/**
+	 * 게시글 작성 시 첨부한 파일의 정보를 담고있는 VO객체의 리스트를 입력받아 파일을 등록하는 메서드
+	 * @param sqlSession	SqlSession객체
+	 * @param fileList		파일 VO객체의 리스트
+	 * @return				등록한 파일의 수
+	 */
+	public int insertFile(SqlSession sqlSession, List<AttachFileVO> fileList) throws SQLException;
+	
+	
+	/**
+	 * 게시글 아이디를 입력받아 게시글을 가져오는 메서드
+	 * @param postid		게시글의 아이디
+	 * @return				게시글의 정보를 담은 VO객체
+	 * @throws SQLException
+	 */
+	public PostVO getPost(String postid) throws SQLException;
+	
+	
+	/**
+	 * 게시글 아이디를 입력받아 게시글에 첨부된 파일의 목록을 가져오는 메서드
+	 * @param postid		게시글의 아이디
+	 * @return				게시글에 첨부된 파일들의 리스트
+	 * @throws SQLException
+	 */
+	public List<AttachFileVO> getFileList(String postid) throws SQLException;
+	
 
 }
+

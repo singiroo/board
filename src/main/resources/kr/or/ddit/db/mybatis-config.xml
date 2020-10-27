@@ -9,6 +9,7 @@
 		<typeAlias type="kr.or.ddit.common.model.PageVO" alias="PageVO"/>
 		<typeAlias type="kr.or.ddit.board.model.BoardVO" alias="BoardVO"/>
 		<typeAlias type="kr.or.ddit.post.model.PostVO" alias="PostVO"/>
+		<typeAlias type="kr.or.ddit.file.model.AttachFileVO" alias="FileVO"/>
 		
 	</typeAliases>
   <environments default="development">

@@ -43,8 +43,12 @@ public class PostListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String boardid = request.getParameter("boardid");
+		String boardnm = request.getParameter("boardnm");
 		String pagetext = request.getParameter("page");
+		logger.debug("page : {}",pagetext);
 		String pagesizetext = request.getParameter("pagesize");
+		logger.debug("pagesize : {}",pagesizetext);
+		
 		int page = 1;
 		int pagesize = 10;
 		
@@ -55,6 +59,8 @@ public class PostListServlet extends HttpServlet {
 			pagesize = Integer.parseInt(pagesizetext);
 		}
 		
+		
+		
 		PageVO pageVo = new PageVO(page, pagesize);
 		
 		Map<String, Object> map = new HashMap<>();
@@ -62,10 +68,19 @@ public class PostListServlet extends HttpServlet {
 		map.put("page", pageVo);
 		map.put("boardid", boardid);
 		
-		 Map<String, Object> postMap = postService.getPostListPage(map);
-		 
-		 
+		Map<String, Object> postMap = postService.getPostListPage(map);
+		List<PostVO> postList = (List<PostVO>)postMap.get("postList");
 		
+		request.setAttribute("pageVo", pageVo); 
+		request.setAttribute("postMap", postMap);
+		request.setAttribute("boardid", boardid);
+		request.setAttribute("boardnm", boardnm);
+		request.setAttribute("totalPage", postMap.get("totalPage"));
+		logger.debug("totalPage : {}", postMap.get("totalPage"));
+		request.setAttribute("postList", postMap.get("postList"));
+		 
+		request.getRequestDispatcher("/post/postList.jsp").forward(request, response);
+
 	}
 
 	/**
