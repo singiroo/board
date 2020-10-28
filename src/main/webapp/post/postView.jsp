@@ -57,14 +57,36 @@
 			cnt++;
 
 	   });
+
+	   $('#btnUpd').on('click', function(){
+    		//console.log("update!!");
+   			document.location = "${pageContext.request.contextPath}/postUpdate?postid=${map.postVo.postid}"
+			
+		})
+
+
+
 	   
 	   $('#btnDel').on('click', function(){
-			cnt--;
-			$('#label'+cnt).remove();
-			$('#file'+cnt).remove();
+			var ask_del = confirm("이 글을 삭제하시겠습니까?");
+			if(ask_del == true){
+				document.location = "${pageContext.request.contextPath}/deletePost?postid=${map.postVo.postid}&boardid=${map.postVo.boardid }";
+			}
 
 	   });
-		   
+
+
+		$('button.downBtn').on('click', function(){
+			var fileid = $(this).prev().data('fileid');
+			document.location = "${pageContext.request.contextPath}/download?fileid="+fileid;
+		});
+
+
+		$('#btnAns').on('click', function(){
+			var parentid = "${map.postVo.postid}";
+			var boardid = "${map.postVo.boardid}";
+			document.location = "${pageContext.request.contextPath}/postCreate?parentid="+parentid+"&boardid="+boardid;
+		});   
 
        
    });
@@ -87,10 +109,43 @@
  	#replsubmit{
  		width : 50px;
  		height : 62px;
- 		vertical-align: top;
+ 		vertical-align: text-top;
  		
  	}
  	
+ 	div.filename{
+ 		display : inline-block;
+ 		width : 200px;
+ 		height : 30px;
+ 	}
+ 	
+ 	#replcont{
+ 		vertical-align: text-top;
+ 	
+ 	}
+ 	
+ 	#allUserBtn{
+ 		text-align: right;
+ 		margin-right : 150px;
+ 	}
+ 	
+ 	label.repllabel{
+ 		float: right;
+ 		margin-right : 150px;
+ 	
+ 	}
+ 	
+ 	ul{
+ 		list-style: none;
+ 	}
+ 	#replUpd,#replDel{
+ 		width : 50px;
+ 		height : 22px;
+ 		vertical-align: text-top;
+ 	}
+ 	#btnTable{
+ 		display : inline-block;
+ 	}
  
  
  </style>
@@ -122,65 +177,83 @@
 			<fieldset>
 				<form id="postform" action="${pageContext.request.contextPath }/postCreate" method="post" enctype="multipart/form-data"  >
 				<input type="hidden" name="userid" value="${S_MEMBER.userId }">
-				<input type="hidden" name="boardid" value="${boardid }">
-				<input type="hidden" name="parentid" value="${parentid }">
+				<input type="hidden" name="boardid" value="${map.postVo.boardid }">
+				<input type="hidden" name="parentid" value="${map.postVo.parentid }">
 				<legend>게시글 조회</legend>
 				<label for="title">제 목 : </label>
-				<span>${postVo.title }</span>
+				<span>${map.postVo.title }</span>
 				<hr>
 				<label for="writer">작 성 자 : </label>
-				<span>${postVo.userid }</span>
+				<span>${map.postVo.userid }</span>
 				<div id="datesdiv">
-				<label id="dateslabel" for="dates">작성일시 :</label>
-				<fmt:formatDate value="${postVo.dates }" pattern="yyyy-MM-dd HH:mm"/>
+					<label id="dateslabel" for="dates">작성일시 :</label>
+					<fmt:formatDate value="${map.postVo.dates }" pattern="yyyy-MM-dd HH:mm"/>
 				</div>			
 				<hr>
 				<label for="cont">내 용 : </label>				
-				<div id="cont" name="cont">${postVo.cont }</div>
+				<div id="cont" name="cont">${map.postVo.cont }</div>
 				<hr>
-				<div id="filediv">
+				<ul>
+					<c:forEach items="${map.fileList }" var="file" varStatus="status" >
+						<li>
+							<div class="filename" data-fileid="${file.fileid }">첨부파일 ${status.index+1 } : ${file.realfilename }</div>
+							<button type="button" class="downBtn">다운로드</button>
+						</li>	
+					</c:forEach>
 				
-				
-				</div>
-				<button type="button" id="btnUpd">+ 수정</button>
-				<button type="button" id="btnDel">- 삭제</button>
-				<button type="button" id="btnList">목록</button>
-				<button type="button" id="btnAns">답글 작성</button>
+				</ul>
 				</form>
+				<c:choose>
+					<c:when test="${S_MEMBER.userId == map.postVo.userid }">
+						<button type="button" id="btnUpd">+ 수정</button>
+						<button type="button" id="btnDel">- 삭제</button>
+					</c:when>
+				</c:choose>
+				<div id="allUserBtn">
+					<button type="button" id="btnList">목록</button>
+					<button type="button" id="btnAns">답글 작성</button>				
+				</div>
 				
-			<%-- 	<!-- 댓글 작성-->
+			 	<!-- 댓글 작성-->
+			 	<hr>
 				<p>댓글</p>
-				<form id="replForm" action="#" method="post">
-				<label for="repltitle">제 목 : </label><br>
+				<form id="replForm" action="${pageContext.request.contextPath }/replCreate" method="post">
+				<input type="hidden" name="repluserid" value="${S_MEMBER.userId}">
+				<input type="hidden" name="postid" value="${map.postVo.postid}">
+				<label for="repltitle">제 목 : </label>
 				<input type="text" id="repltitle" name="repltitle" value="">
 				<br>
 				<label for="replcont">내 용 : </label>
-				<br>
 				<textarea id="replcont" name="replcont" rows="3" cols="80" ></textarea>
 				<input id="replsubmit" type="submit" value="등록">
 				</form>
-				
+				<hr>
 				<!-- 댓글 목록-->
-				
-				<c:forEach var=repl items="">
-					<label >제 목 : </label><br>
-					<input type="text" id="repltitle" name="repltitle" value="">
-					<br>
-					<label for="replcont">내 용 : </label>
-					<br>
-					<textarea id="replcont" name="replcont" rows="3" cols="80"></textarea>
-				</c:forEach>
-				 --%>
-				
-				
-				
-				
-				
+				 <ul id="replList">
+					<c:forEach var="repl" items="${map.replList}" varStatus="status">
+						<li>
+							<label>${status.index+1 }.</label>
+							<label >${repl.title }</label>
+							<label class="repllabel">작성일시 : <fmt:formatDate value="${repl.dates }" pattern="yyyy-MM-dd HH:mm"/></label>
+							<br>
+							<label class="repllabel">작성자 : ${repl.userid }</label>
+							<br>
+							<textarea class="replcont" rows="2" cols="80" readonly>${repl.cont }</textarea>
+							<c:choose>
+								<c:when test="${S_MEMBER.userId == repl.userid }">
+								<table id="btnTable">
+									<tr><td><button type="button" id="replUpd">수정</button></td></tr>
+									<tr><td><button type="button" id="replDel">삭제</button></td></tr>								
+								</table>
+								</c:when>
+							</c:choose>
+						</li>
+						<br>
+					</c:forEach>				
+				</ul> 
 			</fieldset>
 		</div>
-		
-		
-		
+	
 	</div>
 	<!-- /.blog-main -->
 </div>	</div>

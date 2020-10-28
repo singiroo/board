@@ -51,7 +51,9 @@ public class PostCreateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String boardid = request.getParameter("boardid");
+		String parentid = request.getParameter("parentid");
 		request.setAttribute("boardid", boardid);
+		request.setAttribute("parentid", parentid);
 		request.getRequestDispatcher("/post/postCreate.jsp").forward(request, response);
 	}
 
@@ -93,9 +95,9 @@ public class PostCreateServlet extends HttpServlet {
 					filePath = path + filename + extension;
 					filePart.write(filePath);
 					filePart.delete();
-			}
-			AttachFileVO file = new AttachFileVO(null, filePath, realfilename, null);
-			fileList.add(file);				
+				}
+				AttachFileVO file = new AttachFileVO(null, filePath, realfilename, null);
+				fileList.add(file);				
 			}
 		}
 		

@@ -1,6 +1,8 @@
 package kr.or.ddit.post.controller;
 
 import java.io.IOException;
+import java.util.Map;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,9 +37,9 @@ public class PostServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String postid = request.getParameter("postid");
 		
-		PostVO postVo = postService.getPost(postid);
+		Map<String, Object> map = postService.getPost(postid);
 		
-		request.setAttribute("postVo", postVo);
+		request.setAttribute("map", map);
 		
 		request.getRequestDispatcher("/post/postView.jsp").forward(request, response);
 		

@@ -16,5 +16,7 @@ public interface BoardDaoI {
 	
 	public List<BoardVO> getAllBoard() throws SQLException;
 	
+	public BoardVO getBoard(String boardid) throws SQLException;
+	
 	
 }

@@ -23,10 +23,10 @@
 		$('tbody tr').on('click', function(){
 			//data-postid
 			var postid = $(this).data("postid");
-			console.log("tbody tr clicked!!");
-			console.log("postid : "+ postid);
-
-			document.location="/board/post?postid="+ postid;
+			var status = $(this).data("status");
+			if(status == "T"){
+				document.location="/board/post?postid="+ postid;
+			}
 		});
 			
 	});
@@ -50,7 +50,7 @@
 
 <div class="row">
 	<div class="col-sm-8 blog-main">
-		<h2 class="sub-header">${boardnm }</h2>
+		<h2 class="sub-header">${board.boardnm }</h2>
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<tr>
@@ -61,9 +61,9 @@
 				</tr>	
 			<tbody id="postList">
 				<c:forEach var="post" items="${postMap.postList }">
-					<tr data-postid="${post.postid }">
+					<tr data-postid="${post.postid }" data-status="${post.status }">
 					<td>${post.postid }</td>
-					<td>${post.title }</td>
+					<td>${post.title }</td>		
 					<td>${post.userid }</td>
 					<!-- format : yyyy-MM-dd -->
 					<td>
@@ -81,11 +81,16 @@
 		<div class="text-center">
 			<ul class="pagination">
 			
-				<li><span>&lt;&lt;</span></li>
-				<li><span>&lt;</span></li>
-			
-			
-				<c:forEach var="i" begin="1" end="${totalPage }" >
+				<li><a href="${pageContext.request.contextPath}/postList?page=1&boardid=${boardid}">&lt;&lt;</a></li>
+				<c:choose>
+					<c:when test="${pageVo.page > 1 }">
+						<li><a href="${pageContext.request.contextPath}/postList?page=${pageVo.page-1}&boardid=${boardid}">&lt;</a></li>					
+					</c:when>
+					<c:otherwise>
+						<li><span>&lt;</span></li>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach var="i" begin="${totalPage > 10 ? pageVo.page : 1}" end="${totalPage > 10 ? pageVo.page + 9 : totalPage }" >
 					<c:choose>
 						<c:when test="${i == pageVo.page}">
 							<li class="active"><span>${i}</span></li>					
@@ -95,9 +100,15 @@
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
-				
-				<li><span>&gt;</span></li>
-				<li><span>&gt;&gt;</span></li>
+				<c:choose>
+					<c:when test="${pageVo.page < totalPage }">
+						<li><a href="${pageContext.request.contextPath}/postList?page=${pageVo.page+1}&boardid=${boardid}">&gt;</a></li>					
+					</c:when>
+					<c:otherwise>
+						<li><span>&gt;</span></li>
+					</c:otherwise>
+				</c:choose>
+				<li><a href="${pageContext.request.contextPath}/postList?page=${totalPage}&boardid=${boardid}">&gt;&gt;</a></li>
 				
 			</ul>
 		</div>

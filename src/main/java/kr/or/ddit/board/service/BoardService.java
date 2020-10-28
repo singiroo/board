@@ -75,6 +75,23 @@ public class BoardService implements BoardServiceI{
 		return boardList;
 	}
 
+
+
+
+	@Override
+	public BoardVO getBoard(String boardid) {
+		boardDao = new BoardDao();
+		
+		BoardVO board = null;
+		
+		try {
+			board = boardDao.getBoard(boardid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return board;
+	}
+
 	
 	
 }

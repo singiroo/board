@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="repl">
+
+	<!-- 댓글을 등록함  -->
+	<insert id="insertRepl" parameterType="ReplVO">
+		insert into repl 
+		values('repl'||replSeq.nextVal, #{postid}, #{cont}, sysdate, #{title}, 'T', #{userid})	
+	</insert>
+
+
+
+
+
+
+
+</mapper>

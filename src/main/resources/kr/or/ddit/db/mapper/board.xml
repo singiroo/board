@@ -18,6 +18,15 @@
  		
  	</select>
  	
+ 	<!-- 게시판의 아이디를 입력받아 게시판을 가져옴  -->
+ 	<select id="getBoard" parameterType="String" resultType="BoardVO">
+ 	
+ 		select * from board where boardid = #{boardid}
+ 	
+ 	</select>
+ 	
+ 	
+ 	
  	
  	
  	

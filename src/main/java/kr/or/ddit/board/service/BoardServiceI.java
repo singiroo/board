@@ -35,6 +35,13 @@ public interface BoardServiceI {
 	 */
 	public List<BoardVO> getAllBoard();
 	
+	/**
+	 * 게시판의 아이디를 입력받아 해당 게시판을 가져오는 메서드
+	 * @param boardid		게시판의 아이디
+	 * @return				게시판의 정보를 담고있는 VO객체
+	 */
+	public BoardVO getBoard(String boardid);
+	
 	
 	
 

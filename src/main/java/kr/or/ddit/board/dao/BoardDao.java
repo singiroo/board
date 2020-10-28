@@ -72,4 +72,17 @@ public class BoardDao implements BoardDaoI {
 		return boardList;
 	}
 
+
+
+
+	@Override
+	public BoardVO getBoard(String boardid) throws SQLException {
+		sqlSession = MybatisUtil.getSqlSession();
+		
+		BoardVO board = sqlSession.selectOne("board.getBoard", boardid);
+		
+		sqlSession.close();
+		return board;
+	}
+
 }

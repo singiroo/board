@@ -55,7 +55,11 @@
 	   });
 	   
 	   $('#btnDel').on('click', function(){
-			cnt--;
+			if(cnt > 1){
+				cnt--;
+
+			}
+
 			$('#label'+cnt).remove();
 			$('#file'+cnt).remove();
 
@@ -101,7 +105,7 @@
 				<input type="text" id="title" name="title" autofocus>
 				<br><br>
 				<label for="cont">내 용 : </label>				
-				<textarea id="cont" name="cont">Hello Summernote</textarea>
+				<textarea id="cont" name="cont"></textarea>
 				<br>
 				<div id="filediv"></div>
 				<button type="button" id="btnAdd">+ 추가</button>

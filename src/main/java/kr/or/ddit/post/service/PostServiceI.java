@@ -23,11 +23,27 @@ public interface PostServiceI {
 	
 	
 	/**
-	 * 게시글의 아이디를 입력받아 해당 게시글을 가져오는 메서드
+	 * 게시글의 아이디를 입력받아 해당 게시글과 파일을 가져오는 메서드
 	 * @param postid		게시글의 아이디
-	 * @return				게시글의 정보를 담은 VO객체
+	 * @return				게시글의 정보와 첨부파일의 리스트를 담은 HashMap객체
 	 */
-	public PostVO getPost(String postid);
+	public Map<String, Object> getPost(String postid);
+	
+	
+	/**
+	 * 게시글 정보와 파일 정보를 입력받아 게시글을 수정하는 메서드
+	 * @param map			게시글의 정보와 파일 리스트, 지울 파일 목록을 담은 HashMap 객체
+	 * @return				수정된 게시글의 갯수
+	 */
+	public int updatePost(Map<String, Object> map);
+	
+	
+	/**
+	 * 게시글 아이디를 입력받아 해당 게시글을 삭제(상태구분 변경)하는 메서드
+	 * @param postid		게시글의 아이디
+	 * @return				삭제된 게시글의 갯수
+	 */
+	public int deletePost(String postid);
 	
 
 }

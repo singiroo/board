@@ -10,6 +10,7 @@ import kr.or.ddit.board.model.BoardVO;
 import kr.or.ddit.common.model.PageVO;
 import kr.or.ddit.file.model.AttachFileVO;
 import kr.or.ddit.post.model.PostVO;
+import kr.or.ddit.repl.model.ReplVO;
 
 public interface PostDaoI {
 	
@@ -55,7 +56,7 @@ public interface PostDaoI {
 	 * @return				게시글의 정보를 담은 VO객체
 	 * @throws SQLException
 	 */
-	public PostVO getPost(String postid) throws SQLException;
+	public PostVO getPost(SqlSession sqlSession, String postid) throws SQLException;
 	
 	
 	/**
@@ -64,7 +65,46 @@ public interface PostDaoI {
 	 * @return				게시글에 첨부된 파일들의 리스트
 	 * @throws SQLException
 	 */
-	public List<AttachFileVO> getFileList(String postid) throws SQLException;
+	public List<AttachFileVO> getFileList(SqlSession sqlSession, String postid) throws SQLException;
+	
+	
+	/**
+	 * 게시글의 정보를 입력받아 게시글을 수정하는 메서드
+	 * @param postVo		게시글의 정보를 담고 있는 VO객체
+	 * @return				수정된 게시글의 갯수
+	 * @throws SQLException
+	 */
+	public int updatePost(SqlSession sqlSession, PostVO postVo) throws SQLException;
+	
+	
+	/**
+	 * 게시글의 아이디를 입력받아 게시글을 삭제(상태 구분 변경)하는 메서드
+	 * @param postid 		게시글의 아이디
+	 * @return				삭제된 게시글의 갯수
+	 * @throws SQLException
+	 */
+	public int deletePost(String postid) throws SQLException;
+	
+	/**
+	 * 파일의 아이디 목록을 입력받아 파일을 삭제하는 메서드
+	 * @param sqlSession	
+	 * @param delList			파일의 아이디 목록
+	 * @return					삭제된 파일의 갯수
+	 * @throws SQLException
+	 */
+	public int deleteFile(SqlSession sqlSession, List<String> delList) throws SQLException;
+	
+	
+	/**
+	 * 게시글의 아이디를 입력받아 해당 게시글의 댓글 목록을 가져오는 메서드
+	 * @param sqlSession
+	 * @param postid			게시글의 아이디
+	 * @return					게시글의 댓글 목록
+	 * @throws SQLException
+	 */
+	public List<ReplVO> getReplList(SqlSession sqlSession, String postid) throws SQLException;
+	
+	
 	
 
 }
