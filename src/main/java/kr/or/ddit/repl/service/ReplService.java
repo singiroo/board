@@ -24,4 +24,32 @@ public class ReplService implements ReplServiceI {
 		return cnt;
 	}
 
+	@Override
+	public String updateRepl(ReplVO repl) {
+		replDao = new ReplDao();
+		String postid =  null;
+		
+		try {
+			postid = replDao.updateRepl(repl);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return postid;
+	}
+
+	@Override
+	public String deleteRepl(ReplVO repl) {
+		replDao = new ReplDao();
+		String postid =  null;
+		
+		try {
+			postid = replDao.deleteRepl(repl);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return postid;
+	}
+
 }

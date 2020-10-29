@@ -84,19 +84,20 @@ public class PostUpdateServlet extends HttpServlet {
 		new File(path).mkdirs();
 		List<AttachFileVO> fileList = new ArrayList<>();
 		for(Part part : partList) {
-			if(part.getHeader("Content-Disposition").indexOf("filename")!=-1) {
-				String realfilename = FileUploadUtil.getFilename(part.getHeader("Content-Disposition"));
-				String extension = FileUploadUtil.getExtension(realfilename);
-				String filename = UUID.randomUUID().toString();
-				String filePath = "";
+			if(part.getHeader("Content-Disposition").indexOf("filename")!=-1
+					&& part.getHeader("Content-disposition").indexOf("name=\"files\"") == -1) {
 				if(part.getSize() > 0) {
+					String realfilename = FileUploadUtil.getFilename(part.getHeader("Content-Disposition"));
+					String extension = FileUploadUtil.getExtension(realfilename);
+					String filename = UUID.randomUUID().toString();
+					String filePath = "";
 					filePath = path + filename + extension;
 					part.write(filePath);
 					part.delete();
+					AttachFileVO file = new AttachFileVO(null, filePath, realfilename, postid);
+					fileList.add(file);
 				}
 			
-				AttachFileVO file = new AttachFileVO(null, filePath, realfilename, postid);
-				fileList.add(file);
 			}
 		}
 			

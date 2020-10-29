@@ -16,7 +16,6 @@ public class ReplDao implements ReplDaoI {
 	@Override
 	public int insertRepl(ReplVO repl) throws SQLException {
 		sqlSession = MybatisUtil.getSqlSession();
-		System.out.println("dao-side-repl : "+repl.toString());
 		int cnt = 0;
 		cnt = sqlSession.insert("repl.insertRepl", repl);
 		if(cnt == 1) {
@@ -28,5 +27,58 @@ public class ReplDao implements ReplDaoI {
 		sqlSession.close();
 		return cnt;
 	}
+
+
+
+	@Override
+	public String updateRepl(ReplVO repl) throws SQLException {
+		sqlSession = MybatisUtil.getSqlSession();
+		String postid = null;
+		
+		sqlSession.update("repl.updateRepl", repl);
+		
+		postid = repl.getPostid();
+		
+		
+		if(postid != null) {
+			sqlSession.commit();
+		}
+		else {
+			sqlSession.rollback();
+		}
+		
+		sqlSession.close();
+		
+		return postid;
+	}
+
+
+
+	@Override
+	public String deleteRepl(ReplVO repl) throws SQLException {
+		sqlSession = MybatisUtil.getSqlSession();
+		String postid = null;
+		
+		sqlSession.update("repl.deleteRepl", repl);
+		
+		postid = repl.getPostid();
+		
+		
+		if(postid != null) {
+			sqlSession.commit();
+		}
+		else {
+			sqlSession.rollback();
+		}
+		
+		sqlSession.close();
+		
+		return postid;
+	}
+	
+	
+	
+	
+	
 
 }

@@ -3,6 +3,7 @@ package kr.or.ddit.login.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,7 +53,10 @@ public class LoginServlet extends HttpServlet {
 		List<BoardVO> boardList = boardService.getAllBoard();
 		
 		
-		if(pass.equals(memberVo.getPass())) {
+		if(memberVo == null ) {
+			doGet(request, response);
+		}
+		else if(pass.equals(memberVo.getPass())) {
 			HttpSession session = request.getSession();
 			session.setAttribute("S_MEMBER", memberVo);
 			session.setAttribute("S_BOARDLIST", boardList);
@@ -60,6 +64,9 @@ public class LoginServlet extends HttpServlet {
 		}else {
 			doGet(request, response);
 		}
+		
+		RequestDispatcher rd = request.getRequestDispatcher(path);
+		rd.
 	}
 
 }

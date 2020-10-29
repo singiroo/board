@@ -32,6 +32,13 @@
 	});
 		
 </script>
+
+<style>
+	tbody tr:hover{
+		border : 2px solid pink;
+	}
+
+</style>
 </head>
 
 <body>
@@ -49,7 +56,7 @@
 				
 
 <div class="row">
-	<div class="col-sm-8 blog-main">
+	<div class="col-sm-9 blog-main">
 		<h2 class="sub-header">${board.boardnm }</h2>
 		<div class="table-responsive">
 			<table class="table table-striped">
@@ -60,9 +67,9 @@
 					<th>작성일시</th>
 				</tr>	
 			<tbody id="postList">
-				<c:forEach var="post" items="${postMap.postList }">
+				<c:forEach var="post" items="${postMap.postList }" varStatus="status">
 					<tr data-postid="${post.postid }" data-status="${post.status }">
-					<td>${post.postid }</td>
+					<td>${(pageVo.page-1)*pageVo.pageSize+(status.index+1)}</td>
 					<td>${post.title }</td>		
 					<td>${post.userid }</td>
 					<!-- format : yyyy-MM-dd -->

@@ -81,23 +81,24 @@ public class PostCreateServlet extends HttpServlet {
 		new File(path).mkdirs();
 		
 		for(Part filePart : filePartList) {
-			if(filePart.getHeader("Content-Disposition").indexOf("filename")!=-1) {
-				logger.debug(filePart.getContentType());
-				logger.debug("files content-disposition : {}",filePart.getHeader("Content-Disposition"));
-				String realfilename = FileUploadUtil.getFilename(filePart.getHeader("Content-Disposition"));
-				logger.debug("filename : {}",realfilename);
-				String extension = FileUploadUtil.getExtension(realfilename);
-				logger.debug("extension : {}",extension);
-				String filename = UUID.randomUUID().toString();
-				logger.debug("uuid : {}",filename);
-				String filePath ="";
+			if(filePart.getHeader("Content-Disposition").indexOf("filename")!=-1
+					&& filePart.getHeader("Content-disposition").indexOf("name=\"files\"") == -1) {
 				if(filePart.getSize() > 0) {
+					logger.debug(filePart.getContentType());
+					logger.debug("files content-disposition : {}",filePart.getHeader("Content-Disposition"));
+					String realfilename = FileUploadUtil.getFilename(filePart.getHeader("Content-Disposition"));
+					logger.debug("filename : {}",realfilename);
+					String extension = FileUploadUtil.getExtension(realfilename);
+					logger.debug("extension : {}",extension);
+					String filename = UUID.randomUUID().toString();
+					logger.debug("uuid : {}",filename);
+					String filePath ="";
 					filePath = path + filename + extension;
 					filePart.write(filePath);
 					filePart.delete();
+					AttachFileVO file = new AttachFileVO(null, filePath, realfilename, null);
+					fileList.add(file);				
 				}
-				AttachFileVO file = new AttachFileVO(null, filePath, realfilename, null);
-				fileList.add(file);				
 			}
 		}
 		

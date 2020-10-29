@@ -29,7 +29,7 @@ public class PostDao implements PostDaoI {
 	public String insertPost(SqlSession sqlSession, PostVO postVo) throws SQLException {
 		int cnt = 0; 
 		cnt = sqlSession.insert("post.insertPost", postVo);
-		System.out.println("dao-side : "+postVo.getPostid());
+		//System.out.println("dao-side : "+postVo.getPostid());
 		String result = null;
 		if(cnt == 1) {
 			result = postVo.getPostid();

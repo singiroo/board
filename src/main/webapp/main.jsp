@@ -17,6 +17,17 @@
 
 <%@include file="/layout/commonLib.jsp" %>
 
+<style>
+	img{
+		width : 200px;
+		height : 200px;
+	
+	}
+
+</style>
+
+
+
 </head>
 
 <body>
@@ -47,7 +58,7 @@
 			<p class="blog-post-meta">
 				2020.10.26, 김윤환
 			</p>
-
+			<img src="${pageContext.request.contextPath }/images/thumbsup.PNG">
 			<p>계층형 게시판 만들기</p>
 			<hr>
 			

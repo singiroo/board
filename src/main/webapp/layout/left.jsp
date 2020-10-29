@@ -5,7 +5,7 @@
 <ul class="nav nav-sidebar">
 		<h4 align="center"><b>** 메뉴 **</b></h4>
 		<li class="active"><a href="${pageContext.request.contextPath }/main.jsp">Main <span class="sr-only">(current)</span></a></li>
-		<li class="active"><a href="${pageContext.request.contextPath }/memberList?pageSize=8">사용자 관리</a></li>
+		<%-- <li class="active"><a href="${pageContext.request.contextPath }/memberList?pageSize=8">사용자 관리</a></li> --%>
 		<li class="active"><a href="${pageContext.request.contextPath }/boardManage">게시판 관리</a></li>
 		<h4 align="center"><b>** 게시판 목록 **</b></h4>
 		<c:forEach items="${S_BOARDLIST }" var="board">
