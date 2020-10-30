@@ -65,8 +65,6 @@ public class LoginServlet extends HttpServlet {
 			doGet(request, response);
 		}
 		
-		RequestDispatcher rd = request.getRequestDispatcher(path);
-		rd.
 	}
 
 }

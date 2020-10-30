@@ -23,7 +23,7 @@
  <script>
    $(document).ready(function() {
 	   cnt = 1;
-
+	   maxFileSlot = 5;
        $('#cont').summernote({
         height : 350,
         width : 700,
@@ -48,16 +48,20 @@
 	   $('#btnAdd').on('click', function(){
 			var label = '<label id=label'+cnt+' for=file'+cnt+'>첨부파일'+cnt+' :</label>';
 			var files = '<input type="file" id=file'+cnt+' name=file'+cnt+'>';
-			$('#filediv').append(label);
-			$('#filediv').append(files);
-			cnt++;
 
+			if(cnt < maxFileSlot+1){
+				$('#filediv').append(label);
+				$('#filediv').append(files);
+				cnt++;
+			}
+			else{
+				alert("더 이상 파일을 추가할 수 없습니다.\n 파일은 최대 "+maxFileSlot+"개까지 첨부가 가능합니다.");
+			}
 	   });
 	   
 	   $('#btnDel').on('click', function(){
 			if(cnt > 1){
 				cnt--;
-
 			}
 
 			$('#label'+cnt).remove();

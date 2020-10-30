@@ -24,6 +24,8 @@
  <script>
    $(document).ready(function() {
 
+		cnt = 1;
+		maxFileSlot = 5;
        $('#cont').summernote({
         height : 350,
         width : 700,
@@ -46,10 +48,16 @@
        });
 
 	   $('#btnAdd').on('click', function(){
-			var inputfiles = '<li class=fileli >추가파일 : '
-							+'<input type="file" name=file>'
-							+'<button type="button" class="btnDel">x 파일 삭제</button></li>';
-			$('#filelist').append(inputfiles);
+			if(cnt < maxFileSlot - ${map.fileList.size()}+1){
+				var inputfiles = '<li class=fileli >추가파일 : '
+								+'<input type="file" name=file>'
+								+'<button type="button" class="btnDel">x 파일 삭제</button></li>';
+				$('#filelist').append(inputfiles);
+				cnt++;
+			}
+			else{
+				alert("더 이상 파일을 추가할 수 없습니다.\n파일은 "+maxFileSlot+"개까지 첨부가 가능합니다.");
+			}
 	   });
 	   
 	   
@@ -63,6 +71,7 @@
 				console.log($('#delList').val());
 			}
 			$(this).parent().remove();
+			cnt--;
 		});
 		         
    });
