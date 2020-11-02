@@ -2,8 +2,6 @@ package kr.or.ddit.post.service;
 
 import java.util.Map;
 
-import kr.or.ddit.post.model.PostVO;
-
 public interface PostServiceI {
 	
 	/**

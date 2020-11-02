@@ -77,7 +77,7 @@ public class PostUpdateServlet extends HttpServlet {
 			}			
 		}
 		
-		List<Part> partList = new ArrayList(request.getParts());
+		List<Part> partList = new ArrayList<Part>(request.getParts());
 		PostVO postVo = new PostVO(null, postid, null, title, cont, null, null, null);
 		
 		String path = "D:\\upload\\";

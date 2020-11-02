@@ -36,7 +36,7 @@
 				Cookies.remove("rememberme");
 				Cookies.remove("userId");
 			}
-			console.log(id);
+			//console.log(id);
 			$('form').submit();
 		})
 
@@ -59,9 +59,9 @@
       <form class="form-signin" action="${pageContext.request.contextPath }/login" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputId" class="sr-only">ID</label>
-        <input type="text" name="userId" id="inputId" value="brown" class="form-control" placeholder="ID" required autofocus/>
+        <input type="text" name="userId" id="inputId" value="" class="form-control" placeholder="ID" required autofocus/>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="pass" id="inputPassword" value="brownPass" class="form-control" placeholder="Password" required/>
+        <input type="password" name="pass" id="inputPassword" value="" class="form-control" placeholder="Password" required/>
         <div class="checkbox">
           <label>
             <input type="checkbox" id="rememberme" value="remember-me"> Remember me

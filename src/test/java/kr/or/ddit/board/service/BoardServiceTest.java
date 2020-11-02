@@ -2,13 +2,11 @@ package kr.or.ddit.board.service;
 
 import static org.junit.Assert.*;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
-import kr.or.ddit.board.dao.BoardDao;
 import kr.or.ddit.board.model.BoardVO;
 
 public class BoardServiceTest {

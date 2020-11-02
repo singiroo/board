@@ -6,8 +6,6 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import kr.or.ddit.board.model.BoardVO;
-import kr.or.ddit.common.model.PageVO;
 import kr.or.ddit.file.model.AttachFileVO;
 import kr.or.ddit.post.model.PostVO;
 import kr.or.ddit.repl.model.ReplVO;

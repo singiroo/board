@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import kr.or.ddit.post.model.PostVO;
 import kr.or.ddit.post.service.PostService;
 import kr.or.ddit.post.service.PostServiceI;
 

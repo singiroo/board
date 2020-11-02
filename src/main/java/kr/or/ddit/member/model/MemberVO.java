@@ -1,7 +1,5 @@
 package kr.or.ddit.member.model;
 
-import java.sql.Date;
-
 public class MemberVO {
 	private String userId;
 	private String userNm;

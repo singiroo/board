@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import org.junit.Test;
 
 import kr.or.ddit.repl.model.ReplVO;
-import kr.or.ddit.repl.service.ReplService;
-import kr.or.ddit.repl.service.ReplServiceI;
 
 public class ReplDaoTest {
 
