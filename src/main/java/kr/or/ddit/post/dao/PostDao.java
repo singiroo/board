@@ -20,6 +20,7 @@ public class PostDao implements PostDaoI {
 	private SqlSessionTemplate sqlSession;
 	
 	
+	
 
 	@Override
 	public List<PostVO> getPostList(Map<String, Object> map){
