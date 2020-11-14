@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="board">
+    <!-- 사용자의 아이디를 입력받아 사용자의 게시판 리스트를 가져옴  -->
+ 	<select id="getBoardList" parameterType="String" resultType="BoardVO">
+ 	
+ 		select * from board where userid = #{userid}
+ 	
+ 	</select>
+ 	
+ 	<!-- 활성화된 모든 게시판의 목록을 가져옴  -->
+ 	<select id="getAllBoard" resultType="BoardVO">
+ 		
+ 		select * from board where boardstatus='T' order by userid asc, boardid asc
+ 		
+ 	</select>
+ 	
+ 	<!-- 게시판의 아이디를 입력받아 게시판을 가져옴  -->
+ 	<select id="getBoard" parameterType="String" resultType="BoardVO">
+ 	
+ 		select * from board where boardid = #{boardid}
+ 	
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	<!-- 게시판의 정보를 입력받아 게시판을 추가함  -->
+ 	<insert id="insertBoard" parameterType="BoardVO">
+ 		
+ 		insert into board values('board'||board_seq.nextVal, #{boardnm}, 'T', #{userid})
+ 
+ 	</insert>
+ 
+ 	<!-- 게시판의 상태정보를 입력받아 수정함. -->
+ 	<update id="updateBoard" parameterType="BoardVO">
+ 		
+ 		update board set boardstatus = #{boardstatus} where boardid = #{boardid}
+ 		
+ 	</update>
+ 
+ 	
+ 
+ </mapper> 
+ 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 트랜잭션 처리는 공통기능이기 때문에 aop로 만들어야 함.
+	     transactionManager는 advisor라는 개념을 사용해서 aspect를 대체 
+	     따라서, advisor가 필요함.-->
+	 
+	<!-- Advisor : weaving 할 공통기능을 advice라 하는데 advisor는 이 advice를 target에 적용하여
+	               새로 생성한 proxy 객체를 말함. aop에서는 aspect라는 명칭인데, 스프링에서는 advisor라는
+	               독자적 용어를 사용함.  -->     
+	<tx:advice id="txAdvisor" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 모든 메서드에 대하여  -->
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 위와 같이 설정하면 말 그대로 모든 메서드에 대하여 적용되므로 제대로 된 트랜잭션 처리를 할 수 없으므로
+	     범위를 제한해주기 위해 aop 설정을 추가로 해준다.  -->
+	
+	<aop:config>
+		<!-- aop 설정은 위에서 만들어준 advisor 대상으로 포인트컷(적용할 범위)은 모든 service 패키지의 클래스 -->
+		<aop:advisor advice-ref="txAdvisor" pointcut="within(kr.or.ddit..service.*)"/>
+	</aop:config>
+	
+	<!-- 종합하면 모든 service 패키지 내 클래스의 모든 메서드에 트랜잭션 처리를 적용하는 설정.  -->
+	
+</beans>

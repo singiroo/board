@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- namespace는 모듈명이나 패키지+클래스명으로 지정  -->
+<mapper namespace="member">
+  <select id="getMember" parameterType="String" resultType="MemberVO">
+    SELECT * FROM users WHERE userId = #{userId}
+  </select>
+  
+  <select id="selectAllMember" resultType="MemberVO">
+  	SELECT * FROM users
+  </select>
+  
+  <select id="selectMemberPageList" resultType="MemberVO" parameterType="PageVO">
+	  select T2.*
+		  from (select rownum as rn, T1.* 
+		  		  from (select * from users order by userid)T1) T2
+	     where T2.rn between (#{page}-1) * #{pageSize} +1 and #{page} * #{pageSize}
+  </select>
+  
+  <select id="selectMemberTotalCnt" resultType="int">
+  	select count(*)
+  	  from users
+  </select>
+  
+  <insert id="insertMember" parameterType="MemberVO">
+  insert into users 
+  values(#{userId}, #{userNm}, #{pass}, sysdate, #{alias}, #{addr1}, #{addr2}, #{zipcode}, #{fileName}, #{realFileName})
+  
+  </insert>
+  
+  <delete id="deleteMember" parameterType="String">
+  	delete users where userid = #{userId}
+  </delete>
+  
+  
+  <update id="updateMember" parameterType="MemberVO">
+  	update users set usernm = #{userNm},
+  					   pass = #{pass},
+  					  alias = #{alias},
+  					  addr1 = #{addr1},
+  					  addr2 = #{addr2},
+  				    zipcode = #{zipcode},
+				realfilename = #{realFileName},
+				   filename = #{fileName}
+		where userid = #{userId}
+  
+  </update>
+  
+</mapper>
