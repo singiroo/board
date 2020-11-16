@@ -25,7 +25,7 @@
    $(document).ready(function() {
 	   cnt = 1;
 	   isUpdMode = false;
-
+		// 펑션으로 묶자.
        $('#cont').summernote({
     	   height : 350,
            width : 700,
@@ -202,123 +202,121 @@
 
 <body>
 
-<%@ include file="/layout/header.jsp" %>	
+	<%@ include file="/layout/header.jsp" %>	
 
-<div class="container-fluid">
+	<div class="container-fluid">
 		<div class="row">
 			
-<div class="col-sm-3 col-md-2 sidebar">
-	<%@ include file="/layout/left.jsp" %>
-</div>
+			<div class="col-sm-3 col-md-2 sidebar">
+				<%@ include file="/layout/left.jsp" %>
+			</div>
 
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				
-
-<div class="blog-header">
-</div>
-
-<div class="row">
-
-	<div class="col-sm-8 blog-main">
-
-		<div class="blog-post">
-			<fieldset>
-				<form id="postform" action="${pageContext.request.contextPath }/postCreate" method="post" enctype="multipart/form-data"  >
-				<input type="hidden" name="userid" value="${S_MEMBER.userId }">
-				<input type="hidden" name="boardid" value="${map.postVo.boardid }">
-				<input type="hidden" name="parentid" value="${map.postVo.parentid }">
-				<legend>게시글 조회</legend>
-				<label for="title">제 목 : </label>
-				<span id="title">${map.postVo.title }</span>
-				<hr>
-				<label for="writer">작 성 자 : </label>
-				<span>${map.postVo.userid }</span>
-				<div id="datesdiv">
-					<label id="dateslabel" for="dates">작성일시 :</label>
-					<fmt:formatDate value="${map.postVo.dates }" pattern="yyyy-MM-dd HH:mm"/>
-				</div>			
-				<hr>
-				<label for="cont">내 용 : </label>				
-				<div id="cont" name="cont">${map.postVo.cont }</div>
-				<hr>
-				<ul class="fileList">
-					<c:forEach items="${map.fileList }" var="file" varStatus="status" >
-						<li class="file-li">
-							<div class="filename" data-fileid="${file.fileid }">첨부파일 ${status.index+1 } : ${file.realfilename }</div>
-							<button type="button" class="downBtn">다운로드</button>
-						</li>
-					</c:forEach>				
-				</ul>
-				</form>
-				<hr>
-				<c:choose>
-					<c:when test="${S_MEMBER.userId == map.postVo.userid }">
-						<button type="button" id="btnUpd">+ 글 수정</button>
-						<button type="button" id="btnDel">x 글 삭제</button>
-					</c:when>
-				</c:choose>
-				
-				<div id="allUserBtn">
-					<button type="button" id="btnList">목록</button>
-					<button type="button" id="btnAns">답글 작성</button>				
-				</div>				
-
-			 	<!-- 댓글 작성-->
-			 	<hr>
-				<p>댓글</p>
-				<form id="replForm" action="${pageContext.request.contextPath }/replCreate" method="post">
-				<input type="hidden" name="repluserid" value="${S_MEMBER.userId}">
-				<input type="hidden" name="postid" value="${map.postVo.postid}">
-				<label for="repltitle">제 목 : </label>
-				<input type="text" id="repltitle" name="repltitle" value="">
-				<br>
-				<label for="replcont">내 용 : </label>
-				<textarea id="replcont" name="replcont" rows="3" cols="80" ></textarea>
-				<input id="replsubmit" type="submit" value="등록">
-				</form>
-				<hr>
-				<!-- 댓글 목록-->
-				 <ul id="replList">
-					<c:forEach var="repl" items="${map.replList}" varStatus="status">
-						<li class="replList-li">
-							<form class="replListForm" action="${pageContext.request.contextPath }/replUpdate" method="post">
-								<input type="hidden" name="replid" value="${repl.replid}">
-								<label>${status.index+1 }.</label>
-								<c:choose>
-									<c:when test="${repl.status=='T'}">
-										<label >${repl.title }</label>									
-									</c:when>
-									<c:otherwise>
-										<label >[삭제된 댓글입니다]</label>																		
-									</c:otherwise>
-								</c:choose>
-								<label class="repllabel">작성일시 : <fmt:formatDate value="${repl.dates }" pattern="yyyy-MM-dd HH:mm"/></label>
-								<br>
-								<label class="repllabel">작성자 : ${repl.userid }</label>
-								<br>
-								<c:if test="${repl.status=='T'}">
-									<textarea class="replcont" name="replUpdCont" rows="2" cols="80" readonly>${repl.cont }</textarea>
-									<c:choose>
-										<c:when test="${S_MEMBER.userId == repl.userid }">
-										<table id="btnTable">
-											<tr><td><button type="button" class="replUpd">수정</button></td></tr>
-											<tr><td><button type="button" class="replDel">삭제</button></td></tr>								
-										</table>
-										</c:when>
-									</c:choose>
-								</c:if>
-							</form>
-						</li>
-						<br>
-					</c:forEach>				
-				</ul> 
-			</fieldset>
-		</div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+					
 	
-	</div>
-	<!-- /.blog-main -->
-</div>	</div>
-		</div>
-	</div>
+				<div class="blog-header"></div>
+	
+				<div class="row">
+				
+					<div class="col-sm-8 blog-main">
+				
+						<div class="blog-post">
+							<fieldset>
+								<legend>게시글 조회</legend>
+								<form id="postform" action="${pageContext.request.contextPath }/postCreate" method="post" enctype="multipart/form-data"  >
+								<input type="hidden" name="userid" value="${S_MEMBER.userId }">
+								<input type="hidden" name="boardid" value="${map.postVo.boardid }">
+								<input type="hidden" name="parentid" value="${map.postVo.parentid }">
+								<label for="title">제 목 : </label>
+								<span id="title">${map.postVo.title }</span>
+								<hr>
+								<label for="writer">작 성 자 : </label>
+								<span>${map.postVo.userid }</span>
+								<div id="datesdiv">
+									<label id="dateslabel" for="dates">작성일시 :</label>
+									<fmt:formatDate value="${map.postVo.dates }" pattern="yyyy-MM-dd HH:mm"/>
+								</div>			
+								<hr>
+								<label for="cont">내 용 : </label>				
+								<div id="cont">${map.postVo.cont }</div>
+								<hr>
+								<ul class="fileList">
+									<c:forEach items="${map.fileList }" var="file" varStatus="status" >
+										<li class="file-li">
+											<div class="filename" data-fileid="${file.fileid }">첨부파일 ${status.index+1 } : ${file.realfilename }</div>
+											<button type="button" class="downBtn">다운로드</button>
+										</li>
+									</c:forEach>				
+								</ul>
+								</form>
+								<hr>
+								<c:choose>
+									<c:when test="${S_MEMBER.userId == map.postVo.userid }">
+										<button type="button" id="btnUpd">+ 글 수정</button>
+										<button type="button" id="btnDel">x 글 삭제</button>
+									</c:when>
+								</c:choose>
+								
+								<div id="allUserBtn">
+									<button type="button" id="btnList">목록</button>
+									<button type="button" id="btnAns">답글 작성</button>				
+								</div>				
+				
+							 	<!-- 댓글 작성-->
+							 	<hr>
+								<p>댓글</p>
+								<form id="replForm" action="${pageContext.request.contextPath }/replCreate" method="post">
+									<input type="hidden" name="userid" value="${S_MEMBER.userId}">
+									<input type="hidden" name="postid" value="${map.postVo.postid}">
+									<label for="repltitle">제 목 : </label>
+									<input type="text" id="repltitle" name="title" value="">
+									<br>
+									<label for="replcont">내 용 : </label>
+									<textarea id="replcont" name="cont" rows="3" cols="80" ></textarea>
+									<input id="replsubmit" type="submit" value="등록">
+								</form>
+								<hr>
+								<!-- 댓글 목록-->
+								 <ul id="replList">
+									<c:forEach var="repl" items="${map.replList}" varStatus="status">
+										<li class="replList-li">
+											<form class="replListForm" action="${pageContext.request.contextPath }/replUpdate" method="post">
+												<input type="hidden" name="replid" value="${repl.replid}">
+												<label>${status.index+1 }.</label>
+												<c:choose>
+													<c:when test="${repl.status=='T'}">
+														<label >${repl.title }</label>									
+													</c:when>
+													<c:otherwise>
+														<label >[삭제된 댓글입니다]</label>																		
+													</c:otherwise>
+												</c:choose>
+												<label class="repllabel">작성일시 : <fmt:formatDate value="${repl.dates }" pattern="yyyy-MM-dd HH:mm"/></label>
+												<br>
+												<label class="repllabel">작성자 : ${repl.userid }</label>
+												<br>
+												<c:if test="${repl.status=='T'}">
+													<textarea class="replcont" name="cont" rows="2" cols="80" readonly>${repl.cont }</textarea>
+													<c:choose>
+														<c:when test="${S_MEMBER.userId == repl.userid }">
+														<table id="btnTable">
+															<tr><td><button type="button" class="replUpd">수정</button></td></tr>
+															<tr><td><button type="button" class="replDel">삭제</button></td></tr>								
+														</table>
+														</c:when>
+													</c:choose>
+												</c:if>
+											</form>
+										</li>
+										<br>
+									</c:forEach>				
+								</ul><!-- replList  -->
+							</fieldset>
+						</div><!-- blog-post  -->
+					</div><!-- /.blog-main -->
+				</div><!-- row  -->
+			</div><!-- main  -->
+		</div><!-- row  -->
+	</div><!-- container-fluid  -->
 </body>
 </html>

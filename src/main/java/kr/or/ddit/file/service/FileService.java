@@ -1,32 +1,26 @@
 package kr.or.ddit.file.service;
 
-import java.sql.SQLException;
+import javax.annotation.Resource;
 
-import kr.or.ddit.file.dao.FileDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import kr.or.ddit.file.dao.FileDaoI;
 import kr.or.ddit.file.model.AttachFileVO;
 
+@Service("fileService")
 public class FileService implements FileServiceI {
 	
+	private static final Logger logger = LoggerFactory.getLogger(FileService.class);
+	
+	@Resource(name = "fileDao")
 	private FileDaoI fileDao;
 	
-	
-	
-	
-	
+
 	@Override
 	public AttachFileVO getFile(String fileid) {
-		fileDao = new FileDao();
-		AttachFileVO file = null;
-		try {
-			file = fileDao.getFile(fileid);
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		
-		return file;
+		return fileDao.getFile(fileid);
 	}
 
 }

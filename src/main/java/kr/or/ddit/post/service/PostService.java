@@ -39,7 +39,9 @@ public class PostService implements PostServiceI {
 		int allcnt = postDao.getAllPostCnt((String)map.get("boardid"));
 		System.out.println("allcnt : "+allcnt);
 		int totalPage = 1;	//출력할 전체 페이지수 기본값을 1로 설정
-		totalPage = (int)(Math.ceil((double)allcnt / ((PageVO)map.get("page")).getPageSize())); 
+		if(allcnt > 0) {
+			totalPage = (int)(Math.ceil((double)allcnt / ((PageVO)map.get("page")).getPageSize())); 			
+		}
 		System.out.println("service-side totalPage : "+totalPage);
 		resultMap.put("postList", postList);
 		resultMap.put("totalPage", totalPage);			

@@ -47,7 +47,7 @@
 
 	   $('#btnAdd').on('click', function(){
 			var label = '<label id=label'+cnt+' for=file'+cnt+'>첨부파일'+cnt+' :</label>';
-			var files = '<input type="file" id=file'+cnt+' name=file'+cnt+'>';
+			var files = '<input type="file" id=file'+cnt+' name="attachfile">';
 
 			if(cnt < maxFileSlot+1){
 				$('#filediv').append(label);
@@ -100,18 +100,19 @@
 
 		<div class="blog-post">
 			<fieldset>
+				<legend>게시글 작성</legend>
 				<form id="postform" action="${pageContext.request.contextPath }/postCreate" method="post" enctype="multipart/form-data"  >
 				<input type="hidden" name="userid" value="${S_MEMBER.userId }">
-				<input type="hidden" name="boardid" value="${boardid }">
-				<input type="hidden" name="parentid" value="${parentid }">
-				<legend>게시글 작성</legend>
+				<input type="hidden" name="boardid" value="${post.boardid }">
+				<input type="hidden" name="parentid" value="${post.parentid }">
 				<label for="title">제 목 : </label>
 				<input type="text" id="title" name="title" autofocus>
 				<br><br>
 				<label for="cont">내 용 : </label>				
 				<textarea id="cont" name="cont"></textarea>
 				<br>
-				<div id="filediv"></div>
+				<div id="filediv">
+				</div>
 				<button type="button" id="btnAdd">+ 추가</button>
 				<button type="button" id="btnDel">- 제거</button>
 				<input type="submit" value="등록">

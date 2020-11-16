@@ -56,7 +56,9 @@ public class PostVO {
 
 
 	public void setParentid(String parentid) {
-		this.parentid = parentid;
+		if(!("".equals(parentid))) {
+			this.parentid = parentid;			
+		}
 	}
 
 

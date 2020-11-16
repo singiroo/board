@@ -83,39 +83,39 @@
 			</table>
 		</div>
 				
-		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath}/postCreate?boardid=${boardid}">새 글 등록</a>
+		<a class="btn btn-default pull-right" href="${pageContext.request.contextPath}/postCreate?boardid=${board.boardid}">새 글 등록</a>
 
 		<div class="text-center">
 			<ul class="pagination">
 			
-				<li><a href="${pageContext.request.contextPath}/postList?page=1&boardid=${boardid}">&lt;&lt;</a></li>
+				<li><a href="${pageContext.request.contextPath}/postList?page=1&boardid=${board.boardid}">&lt;&lt;</a></li>
 				<c:choose>
 					<c:when test="${pageVo.page > 1 }">
-						<li><a href="${pageContext.request.contextPath}/postList?page=${pageVo.page-1}&boardid=${boardid}">&lt;</a></li>					
+						<li><a href="${pageContext.request.contextPath}/postList?page=${pageVo.page-1}&boardid=${board.boardid}">&lt;</a></li>					
 					</c:when>
 					<c:otherwise>
 						<li><span>&lt;</span></li>
 					</c:otherwise>
 				</c:choose>
-				<c:forEach var="i" begin="${totalPage > 10 ? pageVo.page : 1}" end="${totalPage > 10 ? pageVo.page + 9 : totalPage }" >
+				<c:forEach var="i" begin="${postMap.totalPage > 10 ? pageVo.page : 1}" end="${postMap.totalPage > 10 ? pageVo.page + 9 : postMap.totalPage }" >
 					<c:choose>
 						<c:when test="${i == pageVo.page}">
 							<li class="active"><span>${i}</span></li>					
 						</c:when>
 						<c:otherwise>
-							<li><a href="${pageContext.request.contextPath }/postList?page=${i}&pagesize=${pageVo.pageSize}&boardid=${boardid}&boardnm=${boardnm}">${i }</a></li>					
+							<li><a href="${pageContext.request.contextPath }/postList?page=${i}&pagesize=${pageVo.pageSize}&boardid=${board.boardid}">${i }</a></li>					
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 				<c:choose>
-					<c:when test="${pageVo.page < totalPage }">
-						<li><a href="${pageContext.request.contextPath}/postList?page=${pageVo.page+1}&boardid=${boardid}">&gt;</a></li>					
+					<c:when test="${pageVo.page < postMap.totalPage }">
+						<li><a href="${pageContext.request.contextPath}/postList?page=${pageVo.page+1}&boardid=${board.boardid}">&gt;</a></li>					
 					</c:when>
 					<c:otherwise>
 						<li><span>&gt;</span></li>
 					</c:otherwise>
 				</c:choose>
-				<li><a href="${pageContext.request.contextPath}/postList?page=${totalPage}&boardid=${boardid}">&gt;&gt;</a></li>
+				<li><a href="${pageContext.request.contextPath}/postList?page=${postMap.totalPage}&boardid=${board.boardid}">&gt;&gt;</a></li>
 				
 			</ul>
 		</div>

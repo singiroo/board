@@ -37,23 +37,24 @@ where B.rn between (#{page.page}-1) * #{page.pageSize} + 1 and #{page.page} * #{
   
   	<!-- 게시글의 정보를 입력받아 해당 게시글을 등록함.  -->
   	<insert id="insertPost" parameterType="PostVO" keyColumn="postid" keyProperty="postid" useGeneratedKeys="true">
-  		insert into post values(#{boardid}, 'post'||postSeq.nextVal, #{parentid}, #{title}, sysdate, #{status}, #{userid}, #{cont})
+  		insert into post values(#{boardid}, 'post'||postSeq.nextVal, #{parentid}, #{title}, sysdate, 'T', #{userid}, #{cont})
   	</insert>
   
   	<!-- 게시글의 첨부파일을 등록함.  -->
-  	<insert id="insertFile" parameterType="java.util.List">
-  		insert into attachfile values
-  		<foreach collection="list" item="file" separator=" , ">
-  			('file'||fileSeq.nextVal, #{filenm}, #{realfilename}, #{postid})
+  <!-- 	<insert id="insertFile" parameterType="java.util.Map">
+  		insert into attachfile(fileid, filenm, realfilename, postid) 
+  		values
+  		<foreach collection="fileList" item="attachfile" separator=",">
+  			('file'||fileSeq.nextVal, #{attachfile.filenm}, #{attachfile.realfilename}, #{attachfile.postid} )
   		</foreach>
-  	</insert>
-  	
-  	
-  	
-  	
-  	<!-- <insert id="insertFile" parameterType="FileVO" >
-  		insert into attachfile values('file'||fileSeq.nextVal, #{filenm}, #{realfilename}, #{postid})	  	
   	</insert> -->
+  	
+  	
+  	
+  	
+  	<insert id="insertFile" parameterType="FileVO" >
+  		insert into attachfile values('file'||fileSeq.nextVal, #{filenm}, #{realfilename}, #{postid})	  	
+  	</insert>
   	
   
   	<!-- 게시글을 가져옴  -->

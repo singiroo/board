@@ -36,6 +36,7 @@ public class PostListServlet{
 		map.put("page", pageVo);
 		map.put("boardid", boardid);
 		Map<String, Object> postMap = postService.getPostListPage(map);
+		model.addAttribute("pageVo", pageVo);
 		model.addAttribute("postMap", postMap);
 		model.addAttribute("board", board);
 		return "/post/postList.jsp";

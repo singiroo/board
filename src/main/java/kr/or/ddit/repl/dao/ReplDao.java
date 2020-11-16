@@ -1,78 +1,42 @@
 package kr.or.ddit.repl.dao;
 
-import java.sql.SQLException;
+import javax.annotation.Resource;
 
-import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
 
-import kr.or.ddit.db.MybatisUtil;
 import kr.or.ddit.repl.model.ReplVO;
 
+@Repository("replDao")
 public class ReplDao implements ReplDaoI {
 	
-	private SqlSession sqlSession;
+	@Resource(name="sqlSessionTemplate")
+	private SqlSessionTemplate sqlSession;
 	
 	
 	
 	@Override
-	public int insertRepl(ReplVO repl) throws SQLException {
-		sqlSession = MybatisUtil.getSqlSession();
-		int cnt = 0;
-		cnt = sqlSession.insert("repl.insertRepl", repl);
-		if(cnt == 1) {
-			sqlSession.commit();
-		}
-		else {
-			sqlSession.rollback();
-		}
-		sqlSession.close();
-		return cnt;
+	public int insertRepl(ReplVO repl){
+		return sqlSession.insert("repl.insertRepl", repl);
 	}
 
 
 
 	@Override
-	public String updateRepl(ReplVO repl) throws SQLException {
-		sqlSession = MybatisUtil.getSqlSession();
+	public String updateRepl(ReplVO repl){
 		String postid = null;
-		
 		sqlSession.update("repl.updateRepl", repl);
-		
 		postid = repl.getPostid();
-		
-		
-		if(postid != null) {
-			sqlSession.commit();
-		}
-		else {
-			sqlSession.rollback();
-		}
-		
-		sqlSession.close();
-		
 		return postid;
 	}
 
 
 
 	@Override
-	public String deleteRepl(ReplVO repl) throws SQLException {
-		sqlSession = MybatisUtil.getSqlSession();
+	public String deleteRepl(ReplVO repl){
 		String postid = null;
-		
 		sqlSession.update("repl.deleteRepl", repl);
-		
 		postid = repl.getPostid();
-		
-		
-		if(postid != null) {
-			sqlSession.commit();
-		}
-		else {
-			sqlSession.rollback();
-		}
-		
-		sqlSession.close();
-		
 		return postid;
 	}
 	

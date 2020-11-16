@@ -50,7 +50,7 @@
 	   $('#btnAdd').on('click', function(){
 			if(cnt < maxFileSlot - ${map.fileList.size()}+1){
 				var inputfiles = '<li class=fileli >추가파일 : '
-								+'<input type="file" name=file>'
+								+'<input type="file" name=attachfile>'
 								+'<button type="button" class="btnDel">x 파일 삭제</button></li>';
 				$('#filelist').append(inputfiles);
 				cnt++;
@@ -62,16 +62,19 @@
 	   
 	   
 	   $(document).on('click', 'button.btnDel', function(){
-			
-			var fileid = $(this).parent().data('fileid');
-			if(fileid != null){
-				var list = $('#delList').val();
-				list += fileid + ' ';
-				$('#delList').val(list);
-				console.log($('#delList').val());
+			var isDelete = confirm('정말 삭제하시겠습니까?');
+
+			if(isDelete == true){
+				var fileid = $(this).parent().data('fileid');
+				if(fileid != null){
+					var list = $('#delList').val();
+					list += fileid + ' ';
+					$('#delList').val(list);
+					console.log($('#delList').val());
+				}
+				$(this).parent().remove();
+				cnt--;
 			}
-			$(this).parent().remove();
-			cnt--;
 		});
 		         
    });
@@ -116,10 +119,10 @@
 
 		<div class="blog-post">
 			<fieldset>
+				<legend>게시글 수정</legend>
 				<form id="postform" action="${pageContext.request.contextPath }/postUpdate" method="post" enctype="multipart/form-data"  >
 					<input type="hidden" name="userid" value="${S_MEMBER.userId }">
 					<input type="hidden" name="postid" value="${map.postVo.postid }">
-					<legend>게시글 수정</legend>
 					<label for="title">제 목 : </label>
 					<input type="text" id="title" name="title" value="${map.postVo.title }" autofocus>
 					<br><br>

@@ -12,7 +12,19 @@
 	</context:component-scan>
 	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="1"/>
 	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0"/>
+	</bean>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
+	
+	
+	<bean id="fileDownloadView" class="kr.or.ddit.file.view.FileDownloadView"/>
+	
 	
 	
 	<mvc:annotation-driven/>

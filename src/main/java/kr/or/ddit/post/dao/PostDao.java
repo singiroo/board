@@ -45,10 +45,12 @@ public class PostDao implements PostDaoI {
 	//쿼리문 수정 요망
 	public int insertFile(List<AttachFileVO> fileList){
 		int cnt = 0;
-		cnt = sqlSession.insert("post.insertFile", fileList);
-//		for(AttachFileVO file : fileList) {
-//			cnt += sqlSession.insert("post.insertFile",file);
-//		}
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("fileList", fileList);
+//		cnt = sqlSession.insert("post.insertFile", map);
+		for(AttachFileVO file : fileList) {
+			cnt += sqlSession.insert("post.insertFile",file);
+		}
 		System.out.println("dao-side-insertfile cnt : "+cnt);
 		return cnt;
 	}

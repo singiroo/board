@@ -12,6 +12,6 @@ public interface FileDaoI {
 	 * @return					파일의 정보를 담은 VO객체
 	 * @throws SQLException
 	 */
-	public AttachFileVO getFile(String fileid) throws SQLException;
+	public AttachFileVO getFile(String fileid);
 
 }

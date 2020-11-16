@@ -1,55 +1,31 @@
 package kr.or.ddit.repl.service;
 
-import java.sql.SQLException;
+import javax.annotation.Resource;
 
-import kr.or.ddit.repl.dao.ReplDao;
+import org.springframework.stereotype.Service;
+
 import kr.or.ddit.repl.dao.ReplDaoI;
 import kr.or.ddit.repl.model.ReplVO;
 
+@Service("replService")
 public class ReplService implements ReplServiceI {
 	
+	@Resource(name = "replDao")
 	private ReplDaoI replDao;
 	
 	@Override
 	public int insertRepl(ReplVO repl) {
-		replDao = new ReplDao();
-		int cnt = 0;
-		
-		try {
-			cnt = replDao.insertRepl(repl);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return cnt;
+		return replDao.insertRepl(repl);
 	}
 
 	@Override
 	public String updateRepl(ReplVO repl) {
-		replDao = new ReplDao();
-		String postid =  null;
-		
-		try {
-			postid = replDao.updateRepl(repl);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return postid;
+		return replDao.updateRepl(repl);
 	}
 
 	@Override
 	public String deleteRepl(ReplVO repl) {
-		replDao = new ReplDao();
-		String postid =  null;
-		
-		try {
-			postid = replDao.deleteRepl(repl);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return postid;
+		return replDao.deleteRepl(repl);
 	}
 
 }

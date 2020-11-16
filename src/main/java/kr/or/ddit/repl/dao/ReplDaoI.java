@@ -12,7 +12,7 @@ public interface ReplDaoI {
 	 * @return			추가된 댓글의 갯수
 	 * @throws SQLException
 	 */
-	public int insertRepl(ReplVO repl) throws SQLException;
+	public int insertRepl(ReplVO repl);
 	
 	
 	/**
@@ -21,7 +21,7 @@ public interface ReplDaoI {
 	 * @return				댓글의 부모글 아이디
 	 * @throws SQLException
 	 */
-	public String updateRepl(ReplVO repl) throws SQLException;
+	public String updateRepl(ReplVO repl);
 	
 	
 	
@@ -31,6 +31,6 @@ public interface ReplDaoI {
 	 * @return				댓글의 부모글 아이디
 	 * @throws SQLException
 	 */
-	public String deleteRepl(ReplVO repl) throws SQLException;
+	public String deleteRepl(ReplVO repl);
 
 }
