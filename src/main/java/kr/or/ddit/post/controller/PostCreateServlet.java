@@ -37,7 +37,7 @@ public class PostCreateServlet{
 	public String postCreateView(PostVO postVo, Model model) {
 		logger.debug("boardid : {}", postVo.getBoardid());
 		model.addAttribute("post", postVo);
-		return "/post/postCreate.jsp";
+		return "tiles/post/postCreate";
 	}
 	
 	@PostMapping("/postCreate")

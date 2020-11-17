@@ -39,7 +39,7 @@ public class PostListServlet{
 		model.addAttribute("pageVo", pageVo);
 		model.addAttribute("postMap", postMap);
 		model.addAttribute("board", board);
-		return "/post/postList.jsp";
+		return "tiles/post/postList";
 	}
 	
 

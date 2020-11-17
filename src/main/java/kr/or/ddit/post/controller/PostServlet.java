@@ -23,7 +23,7 @@ public class PostServlet {
 	public String getPost(String postid, Model model) {
 		Map<String, Object> map = postService.getPost(postid);
 		model.addAttribute("map", map);
-		return "/post/postView.jsp";
+		return "tiles/post/postView";
 	}
 
 	/*

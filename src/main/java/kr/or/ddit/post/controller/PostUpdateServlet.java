@@ -47,7 +47,7 @@ public class PostUpdateServlet{
 	public String postUpdateView(String postid, Model model) {
 		Map<String, Object> map = postService.getPost(postid);
 		model.addAttribute("map", map);
-		return "/post/postUpdate.jsp";
+		return "tiles/post/postUpdate";
 	}
 	
 	@PostMapping("/postUpdate")

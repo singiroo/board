@@ -39,7 +39,7 @@ public class BoardManageServlet{
 		
 		model.addAttribute("boardList", boardList);
 		
-		return "/board/boardManage.jsp";
+		return "tiles/board/boardManage";
 	}
 	
 	

@@ -30,7 +30,7 @@ public class LoginServlet{
 	
 	@RequestMapping("/login")
 	public String loginView() {
-		return "/login.jsp";
+		return "/main/login";
 	}
 	
 	/*
@@ -41,6 +41,12 @@ public class LoginServlet{
 	
 	@RequestMapping("/Main")
 	public String login(String userId, String pass, HttpSession session) {
+		MemberVO sMember = (MemberVO) session.getAttribute("S_MEMBER");
+		
+		if(sMember != null) {
+			return "tiles/main/main";
+		}
+		
 		MemberVO memberVo = memberService.getMember(userId);
 		List<BoardVO> boardList = boardService.getAllBoard();
 		
@@ -48,7 +54,7 @@ public class LoginServlet{
 		if(memberVo != null && memberVo.getPass().equals(pass)) {
 			session.setAttribute("S_MEMBER", memberVo);
 			session.setAttribute("S_BOARDLIST", boardList);
-			return "/main.jsp";
+			return "tiles/main/main";
 		}
 		
 		return "redirect:/login";
